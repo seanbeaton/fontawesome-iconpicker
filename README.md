@@ -113,6 +113,8 @@ var options = {
     },
     input: 'input,.iconpicker-input', // children input selector
     inputSearch: false, // use the input as a search box too?
+    paginateIcons: false, // should the iconpicker paginate the icons it loads. good for 1k+ icons
+    iconsPerPage: 100, // how many icons to load at once
     container: false, //  Appends the popover to a specific element. If not set, the selected element or element parent is used
     component: '.input-group-addon,.iconpicker-component', // children component jQuery selector or object, relative to the container element
     // Plugin templates:

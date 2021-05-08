@@ -39,7 +39,26 @@
     overflow-y: auto;
     min-height: @row_outer_height;
     max-height: (@row_outer_height * @num_rows) + 1;
+    &.iconpicker-items--can-load-more {
+      //margin-bottom: @base_spacing * 2;
+      .iconpicker-load-more {
+        display: block;
+      }
+    }
+  }
 
+  .iconpicker-load-more {
+    display: none;
+    clear: both;
+    text-align: center;
+    padding: @base_spacing/2 @base_spacing;
+    border: 1px solid @border_color;
+    line-height: 1;
+    font-size: @base_spacing;
+    margin: 0 auto @base_spacing;
+    &:hover {
+      background-color: @hover_bg;
+    }
   }
 
   .iconpicker-item {
@@ -52,6 +71,7 @@
     cursor: pointer;
     border-radius: 3px;
     font-size: @item_size;
+    box-sizing: content-box;
     .outer-border();
     color: inherit;
     &:hover:not(.iconpicker-selected) {

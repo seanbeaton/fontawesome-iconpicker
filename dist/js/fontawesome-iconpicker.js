@@ -14,16 +14,16 @@
     } else {
         e(jQuery);
     }
-})(function(j) {
-    j.ui = j.ui || {};
-    var e = j.ui.version = "1.12.1";
+})(function(I) {
+    I.ui = I.ui || {};
+    var e = I.ui.version = "1.12.1";
     (function() {
-        var r, y = Math.max, x = Math.abs, s = /left|center|right/, i = /top|center|bottom/, f = /[\+\-]\d+(\.[\d]+)?%?/, l = /^\w+/, c = /%$/, a = j.fn.pos;
+        var r, y = Math.max, x = Math.abs, s = /left|center|right/, i = /top|center|bottom/, f = /[\+\-]\d+(\.[\d]+)?%?/, c = /^\w+/, l = /%$/, a = I.fn.pos;
         function q(e, a, t) {
-            return [ parseFloat(e[0]) * (c.test(e[0]) ? a / 100 : 1), parseFloat(e[1]) * (c.test(e[1]) ? t / 100 : 1) ];
+            return [ parseFloat(e[0]) * (l.test(e[0]) ? a / 100 : 1), parseFloat(e[1]) * (l.test(e[1]) ? t / 100 : 1) ];
         }
         function C(e, a) {
-            return parseInt(j.css(e, a), 10) || 0;
+            return parseInt(I.css(e, a), 10) || 0;
         }
         function t(e) {
             var a = e[0];
@@ -37,7 +37,7 @@
                     }
                 };
             }
-            if (j.isWindow(a)) {
+            if (I.isWindow(a)) {
                 return {
                     width: e.width(),
                     height: e.height(),
@@ -63,13 +63,13 @@
                 offset: e.offset()
             };
         }
-        j.pos = {
+        I.pos = {
             scrollbarWidth: function() {
                 if (r !== undefined) {
                     return r;
                 }
-                var e, a, t = j("<div " + "style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'>" + "<div style='height:100px;width:auto;'></div></div>"), s = t.children()[0];
-                j("body").append(t);
+                var e, a, t = I("<div " + "style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'>" + "<div style='height:100px;width:auto;'></div></div>"), s = t.children()[0];
+                I("body").append(t);
                 e = s.offsetWidth;
                 t.css("overflow", "scroll");
                 a = s.offsetWidth;
@@ -82,17 +82,17 @@
             getScrollInfo: function(e) {
                 var a = e.isWindow || e.isDocument ? "" : e.element.css("overflow-x"), t = e.isWindow || e.isDocument ? "" : e.element.css("overflow-y"), s = a === "scroll" || a === "auto" && e.width < e.element[0].scrollWidth, r = t === "scroll" || t === "auto" && e.height < e.element[0].scrollHeight;
                 return {
-                    width: r ? j.pos.scrollbarWidth() : 0,
-                    height: s ? j.pos.scrollbarWidth() : 0
+                    width: r ? I.pos.scrollbarWidth() : 0,
+                    height: s ? I.pos.scrollbarWidth() : 0
                 };
             },
             getWithinInfo: function(e) {
-                var a = j(e || window), t = j.isWindow(a[0]), s = !!a[0] && a[0].nodeType === 9, r = !t && !s;
+                var a = I(e || window), t = I.isWindow(a[0]), s = !!a[0] && a[0].nodeType === 9, r = !t && !s;
                 return {
                     element: a,
                     isWindow: t,
                     isDocument: s,
-                    offset: r ? j(e).offset() : {
+                    offset: r ? I(e).offset() : {
                         left: 0,
                         top: 0
                     },
@@ -103,12 +103,12 @@
                 };
             }
         };
-        j.fn.pos = function(h) {
+        I.fn.pos = function(h) {
             if (!h || !h.of) {
                 return a.apply(this, arguments);
             }
-            h = j.extend({}, h);
-            var m, p, d, u, T, e, g = j(h.of), b = j.pos.getWithinInfo(h.within), k = j.pos.getScrollInfo(b), w = (h.collision || "flip").split(" "), v = {};
+            h = I.extend({}, h);
+            var m, p, d, u, T, e, g = I(h.of), b = I.pos.getWithinInfo(h.within), k = I.pos.getScrollInfo(b), w = (h.collision || "flip").split(" "), v = {};
             e = t(g);
             if (g[0].preventDefault) {
                 h.at = "left top";
@@ -116,8 +116,8 @@
             p = e.width;
             d = e.height;
             u = e.offset;
-            T = j.extend({}, u);
-            j.each([ "my", "at" ], function() {
+            T = I.extend({}, u);
+            I.each([ "my", "at" ], function() {
                 var e = (h[this] || "").split(" "), a, t;
                 if (e.length === 1) {
                     e = s.test(e[0]) ? e.concat([ "center" ]) : i.test(e[0]) ? [ "center" ].concat(e) : [ "center", "center" ];
@@ -127,7 +127,7 @@
                 a = f.exec(e[0]);
                 t = f.exec(e[1]);
                 v[this] = [ a ? a[0] : 0, t ? t[0] : 0 ];
-                h[this] = [ l.exec(e[0])[0], l.exec(e[1])[0] ];
+                h[this] = [ c.exec(e[0])[0], c.exec(e[1])[0] ];
             });
             if (w.length === 1) {
                 w[1] = w[0];
@@ -146,16 +146,16 @@
             T.left += m[0];
             T.top += m[1];
             return this.each(function() {
-                var t, e, f = j(this), l = f.outerWidth(), c = f.outerHeight(), a = C(this, "marginLeft"), s = C(this, "marginTop"), r = l + a + C(this, "marginRight") + k.width, i = c + s + C(this, "marginBottom") + k.height, o = j.extend({}, T), n = q(v.my, f.outerWidth(), f.outerHeight());
+                var t, e, f = I(this), c = f.outerWidth(), l = f.outerHeight(), a = C(this, "marginLeft"), s = C(this, "marginTop"), r = c + a + C(this, "marginRight") + k.width, i = l + s + C(this, "marginBottom") + k.height, o = I.extend({}, T), n = q(v.my, f.outerWidth(), f.outerHeight());
                 if (h.my[0] === "right") {
-                    o.left -= l;
+                    o.left -= c;
                 } else if (h.my[0] === "center") {
-                    o.left -= l / 2;
+                    o.left -= c / 2;
                 }
                 if (h.my[1] === "bottom") {
-                    o.top -= c;
+                    o.top -= l;
                 } else if (h.my[1] === "center") {
-                    o.top -= c / 2;
+                    o.top -= l / 2;
                 }
                 o.left += n[0];
                 o.top += n[1];
@@ -163,13 +163,13 @@
                     marginLeft: a,
                     marginTop: s
                 };
-                j.each([ "left", "top" ], function(e, a) {
-                    if (j.ui.pos[w[e]]) {
-                        j.ui.pos[w[e]][a](o, {
+                I.each([ "left", "top" ], function(e, a) {
+                    if (I.ui.pos[w[e]]) {
+                        I.ui.pos[w[e]][a](o, {
                             targetWidth: p,
                             targetHeight: d,
-                            elemWidth: l,
-                            elemHeight: c,
+                            elemWidth: c,
+                            elemHeight: l,
                             collisionPosition: t,
                             collisionWidth: r,
                             collisionHeight: i,
@@ -183,7 +183,7 @@
                 });
                 if (h.using) {
                     e = function(e) {
-                        var a = u.left - o.left, t = a + p - l, s = u.top - o.top, r = s + d - c, i = {
+                        var a = u.left - o.left, t = a + p - c, s = u.top - o.top, r = s + d - l, i = {
                             target: {
                                 element: g,
                                 left: u.left,
@@ -195,16 +195,16 @@
                                 element: f,
                                 left: o.left,
                                 top: o.top,
-                                width: l,
-                                height: c
+                                width: c,
+                                height: l
                             },
                             horizontal: t < 0 ? "left" : a > 0 ? "right" : "center",
                             vertical: r < 0 ? "top" : s > 0 ? "bottom" : "middle"
                         };
-                        if (p < l && x(a + t) < p) {
+                        if (p < c && x(a + t) < p) {
                             i.horizontal = "center";
                         }
-                        if (d < c && x(s + r) < d) {
+                        if (d < l && x(s + r) < d) {
                             i.vertical = "middle";
                         }
                         if (y(x(a), x(t)) > y(x(s), x(r))) {
@@ -215,12 +215,12 @@
                         h.using.call(this, e, i);
                     };
                 }
-                f.offset(j.extend(o, {
+                f.offset(I.extend(o, {
                     using: e
                 }));
             });
         };
-        j.ui.pos = {
+        I.ui.pos = {
             _trigger: function(e, a, t, s) {
                 if (a.elem) {
                     a.elem.trigger({
@@ -233,16 +233,16 @@
             },
             fit: {
                 left: function(e, a) {
-                    j.ui.pos._trigger(e, a, "posCollide", "fitLeft");
-                    var t = a.within, s = t.isWindow ? t.scrollLeft : t.offset.left, r = t.width, i = e.left - a.collisionPosition.marginLeft, f = s - i, l = i + a.collisionWidth - r - s, c;
+                    I.ui.pos._trigger(e, a, "posCollide", "fitLeft");
+                    var t = a.within, s = t.isWindow ? t.scrollLeft : t.offset.left, r = t.width, i = e.left - a.collisionPosition.marginLeft, f = s - i, c = i + a.collisionWidth - r - s, l;
                     if (a.collisionWidth > r) {
-                        if (f > 0 && l <= 0) {
-                            c = e.left + f + a.collisionWidth - r - s;
-                            e.left += f - c;
-                        } else if (l > 0 && f <= 0) {
+                        if (f > 0 && c <= 0) {
+                            l = e.left + f + a.collisionWidth - r - s;
+                            e.left += f - l;
+                        } else if (c > 0 && f <= 0) {
                             e.left = s;
                         } else {
-                            if (f > l) {
+                            if (f > c) {
                                 e.left = s + r - a.collisionWidth;
                             } else {
                                 e.left = s;
@@ -250,24 +250,24 @@
                         }
                     } else if (f > 0) {
                         e.left += f;
-                    } else if (l > 0) {
-                        e.left -= l;
+                    } else if (c > 0) {
+                        e.left -= c;
                     } else {
                         e.left = y(e.left - i, e.left);
                     }
-                    j.ui.pos._trigger(e, a, "posCollided", "fitLeft");
+                    I.ui.pos._trigger(e, a, "posCollided", "fitLeft");
                 },
                 top: function(e, a) {
-                    j.ui.pos._trigger(e, a, "posCollide", "fitTop");
-                    var t = a.within, s = t.isWindow ? t.scrollTop : t.offset.top, r = a.within.height, i = e.top - a.collisionPosition.marginTop, f = s - i, l = i + a.collisionHeight - r - s, c;
+                    I.ui.pos._trigger(e, a, "posCollide", "fitTop");
+                    var t = a.within, s = t.isWindow ? t.scrollTop : t.offset.top, r = a.within.height, i = e.top - a.collisionPosition.marginTop, f = s - i, c = i + a.collisionHeight - r - s, l;
                     if (a.collisionHeight > r) {
-                        if (f > 0 && l <= 0) {
-                            c = e.top + f + a.collisionHeight - r - s;
-                            e.top += f - c;
-                        } else if (l > 0 && f <= 0) {
+                        if (f > 0 && c <= 0) {
+                            l = e.top + f + a.collisionHeight - r - s;
+                            e.top += f - l;
+                        } else if (c > 0 && f <= 0) {
                             e.top = s;
                         } else {
-                            if (f > l) {
+                            if (f > c) {
                                 e.top = s + r - a.collisionHeight;
                             } else {
                                 e.top = s;
@@ -275,56 +275,56 @@
                         }
                     } else if (f > 0) {
                         e.top += f;
-                    } else if (l > 0) {
-                        e.top -= l;
+                    } else if (c > 0) {
+                        e.top -= c;
                     } else {
                         e.top = y(e.top - i, e.top);
                     }
-                    j.ui.pos._trigger(e, a, "posCollided", "fitTop");
+                    I.ui.pos._trigger(e, a, "posCollided", "fitTop");
                 }
             },
             flip: {
                 left: function(e, a) {
-                    j.ui.pos._trigger(e, a, "posCollide", "flipLeft");
-                    var t = a.within, s = t.offset.left + t.scrollLeft, r = t.width, i = t.isWindow ? t.scrollLeft : t.offset.left, f = e.left - a.collisionPosition.marginLeft, l = f - i, c = f + a.collisionWidth - r - i, o = a.my[0] === "left" ? -a.elemWidth : a.my[0] === "right" ? a.elemWidth : 0, n = a.at[0] === "left" ? a.targetWidth : a.at[0] === "right" ? -a.targetWidth : 0, h = -2 * a.offset[0], m, p;
-                    if (l < 0) {
+                    I.ui.pos._trigger(e, a, "posCollide", "flipLeft");
+                    var t = a.within, s = t.offset.left + t.scrollLeft, r = t.width, i = t.isWindow ? t.scrollLeft : t.offset.left, f = e.left - a.collisionPosition.marginLeft, c = f - i, l = f + a.collisionWidth - r - i, o = a.my[0] === "left" ? -a.elemWidth : a.my[0] === "right" ? a.elemWidth : 0, n = a.at[0] === "left" ? a.targetWidth : a.at[0] === "right" ? -a.targetWidth : 0, h = -2 * a.offset[0], m, p;
+                    if (c < 0) {
                         m = e.left + o + n + h + a.collisionWidth - r - s;
-                        if (m < 0 || m < x(l)) {
+                        if (m < 0 || m < x(c)) {
                             e.left += o + n + h;
                         }
-                    } else if (c > 0) {
+                    } else if (l > 0) {
                         p = e.left - a.collisionPosition.marginLeft + o + n + h - i;
-                        if (p > 0 || x(p) < c) {
+                        if (p > 0 || x(p) < l) {
                             e.left += o + n + h;
                         }
                     }
-                    j.ui.pos._trigger(e, a, "posCollided", "flipLeft");
+                    I.ui.pos._trigger(e, a, "posCollided", "flipLeft");
                 },
                 top: function(e, a) {
-                    j.ui.pos._trigger(e, a, "posCollide", "flipTop");
-                    var t = a.within, s = t.offset.top + t.scrollTop, r = t.height, i = t.isWindow ? t.scrollTop : t.offset.top, f = e.top - a.collisionPosition.marginTop, l = f - i, c = f + a.collisionHeight - r - i, o = a.my[1] === "top", n = o ? -a.elemHeight : a.my[1] === "bottom" ? a.elemHeight : 0, h = a.at[1] === "top" ? a.targetHeight : a.at[1] === "bottom" ? -a.targetHeight : 0, m = -2 * a.offset[1], p, d;
-                    if (l < 0) {
+                    I.ui.pos._trigger(e, a, "posCollide", "flipTop");
+                    var t = a.within, s = t.offset.top + t.scrollTop, r = t.height, i = t.isWindow ? t.scrollTop : t.offset.top, f = e.top - a.collisionPosition.marginTop, c = f - i, l = f + a.collisionHeight - r - i, o = a.my[1] === "top", n = o ? -a.elemHeight : a.my[1] === "bottom" ? a.elemHeight : 0, h = a.at[1] === "top" ? a.targetHeight : a.at[1] === "bottom" ? -a.targetHeight : 0, m = -2 * a.offset[1], p, d;
+                    if (c < 0) {
                         d = e.top + n + h + m + a.collisionHeight - r - s;
-                        if (d < 0 || d < x(l)) {
+                        if (d < 0 || d < x(c)) {
                             e.top += n + h + m;
                         }
-                    } else if (c > 0) {
+                    } else if (l > 0) {
                         p = e.top - a.collisionPosition.marginTop + n + h + m - i;
-                        if (p > 0 || x(p) < c) {
+                        if (p > 0 || x(p) < l) {
                             e.top += n + h + m;
                         }
                     }
-                    j.ui.pos._trigger(e, a, "posCollided", "flipTop");
+                    I.ui.pos._trigger(e, a, "posCollided", "flipTop");
                 }
             },
             flipfit: {
                 left: function() {
-                    j.ui.pos.flip.left.apply(this, arguments);
-                    j.ui.pos.fit.left.apply(this, arguments);
+                    I.ui.pos.flip.left.apply(this, arguments);
+                    I.ui.pos.fit.left.apply(this, arguments);
                 },
                 top: function() {
-                    j.ui.pos.flip.top.apply(this, arguments);
-                    j.ui.pos.fit.top.apply(this, arguments);
+                    I.ui.pos.flip.top.apply(this, arguments);
+                    I.ui.pos.fit.top.apply(this, arguments);
                 }
             }
         };
@@ -340,7 +340,7 @@
                 background: "none"
             };
             if (i) {
-                j.extend(t, {
+                I.extend(t, {
                     position: "absolute",
                     left: "-1000px",
                     top: "-1000px"
@@ -353,13 +353,13 @@
             a = i || document.documentElement;
             a.insertBefore(e, a.firstChild);
             f.style.cssText = "position: absolute; left: 10.7432222px;";
-            s = j(f).offset().left;
-            j.support.offsetFractions = s > 10 && s < 11;
+            s = I(f).offset().left;
+            I.support.offsetFractions = s > 10 && s < 11;
             e.innerHTML = "";
             a.removeChild(e);
         })();
     })();
-    var a = j.ui.position;
+    var a = I.ui.position;
 });
 
 (function(e) {
@@ -369,9 +369,9 @@
     } else if (window.jQuery && !window.jQuery.fn.iconpicker) {
         e(window.jQuery);
     }
-})(function(c) {
+})(function(o) {
     "use strict";
-    var f = {
+    var r = {
         isEmpty: function(e) {
             return e === false || e === "" || e === null || e === undefined;
         },
@@ -379,16 +379,16 @@
             return this.isEmpty(e) === true || e.length === 0;
         },
         isElement: function(e) {
-            return c(e).length > 0;
+            return o(e).length > 0;
         },
         isString: function(e) {
             return typeof e === "string" || e instanceof String;
         },
         isArray: function(e) {
-            return c.isArray(e);
+            return o.isArray(e);
         },
         inArray: function(e, a) {
-            return c.inArray(e, a) !== -1;
+            return o.inArray(e, a) !== -1;
         },
         throwError: function(e) {
             throw "Font Awesome Icon Picker Exception: " + e;
@@ -396,17 +396,17 @@
     };
     var t = function(e, a) {
         this._id = t._idCounter++;
-        this.element = c(e).addClass("iconpicker-element");
+        this.element = o(e).addClass("iconpicker-element");
         this._trigger("iconpickerCreate", {
             iconpickerValue: this.iconpickerValue
         });
-        this.options = c.extend({}, t.defaultOptions, this.element.data(), a);
-        this.options.templates = c.extend({}, t.defaultOptions.templates, this.options.templates);
+        this.options = o.extend({}, t.defaultOptions, this.element.data(), a);
+        this.options.templates = o.extend({}, t.defaultOptions.templates, this.options.templates);
         this.options.originalPlacement = this.options.placement;
-        this.container = f.isElement(this.options.container) ? c(this.options.container) : false;
+        this.container = r.isElement(this.options.container) ? o(this.options.container) : false;
         if (this.container === false) {
             if (this.element.is(".dropdown-toggle")) {
-                this.container = c("~ .dropdown-menu:first", this.element);
+                this.container = o("~ .dropdown-menu:first", this.element);
             } else {
                 this.container = this.element.is("input,textarea,button,.btn") ? this.element.parent() : this.element;
             }
@@ -467,6 +467,8 @@
         },
         input: "input,.iconpicker-input",
         inputSearch: false,
+        paginateIcons: false,
+        iconsPerPage: 100,
         container: false,
         component: ".input-group-addon,.iconpicker-component",
         templates: {
@@ -475,13 +477,14 @@
             buttons: '<button class="iconpicker-btn iconpicker-btn-cancel btn btn-default btn-sm">Cancel</button>' + ' <button class="iconpicker-btn iconpicker-btn-accept btn btn-primary btn-sm">Accept</button>',
             search: '<input type="search" class="form-control iconpicker-search" placeholder="Type to filter" />',
             iconpicker: '<div class="iconpicker"><div class="iconpicker-items"></div></div>',
-            iconpickerItem: '<a role="button" href="javascript:;" class="iconpicker-item"><i></i></a>'
+            iconpickerItem: '<a role="button" href="javascript:;" class="iconpicker-item"><i></i></a>',
+            loadMoreButton: '<button class="iconpicker-load-more">Load More</button>'
         }
     };
     t.batch = function(e, a) {
         var t = Array.prototype.slice.call(arguments, 2);
-        return c(e).each(function() {
-            var e = c(this).data("iconpicker");
+        return o(e).each(function() {
+            var e = o(this).data("iconpicker");
             if (!!e) {
                 e[a].apply(e, t);
             }
@@ -490,32 +493,34 @@
     t.prototype = {
         constructor: t,
         options: {},
+        offset: 0,
+        processedIcons: [],
         _id: 0,
         _trigger: function(e, a) {
             a = a || {};
-            this.element.trigger(c.extend({
+            this.element.trigger(o.extend({
                 type: e,
                 iconpickerInstance: this
             }, a));
         },
         _createPopover: function() {
-            this.popover = c(this.options.templates.popover);
+            this.popover = o(this.options.templates.popover);
             var e = this.popover.find(".popover-title");
             if (!!this.options.title) {
-                e.append(c('<div class="popover-title-text">' + this.options.title + "</div>"));
+                e.append(o('<div class="popover-title-text">' + this.options.title + "</div>"));
             }
             if (this.hasSeparatedSearchInput() && !this.options.searchInFooter) {
                 e.append(this.options.templates.search);
             } else if (!this.options.title) {
                 e.remove();
             }
-            if (this.options.showFooter && !f.isEmpty(this.options.templates.footer)) {
-                var a = c(this.options.templates.footer);
+            if (this.options.showFooter && !r.isEmpty(this.options.templates.footer)) {
+                var a = o(this.options.templates.footer);
                 if (this.hasSeparatedSearchInput() && this.options.searchInFooter) {
-                    a.append(c(this.options.templates.search));
+                    a.append(o(this.options.templates.search));
                 }
-                if (!f.isEmpty(this.options.templates.buttons)) {
-                    a.append(c(this.options.templates.buttons));
+                if (!r.isEmpty(this.options.templates.buttons)) {
+                    a.append(o(this.options.templates.buttons));
                 }
                 this.popover.append(a);
             }
@@ -525,10 +530,25 @@
             return this.popover;
         },
         _createIconpicker: function() {
+            this.iconpicker = o(this.options.templates.iconpicker);
+            var a = this;
+            this._processIcons();
+            this._loadIcons();
+            if (this.options.paginateIcons) {
+                var e = o(this.options.templates.loadMoreButton);
+                e.on("click", function(e) {
+                    e.preventDefault();
+                    a._loadIcons();
+                });
+                this.iconpicker.find(".iconpicker-items").addClass("iconpicker-items--can-load-more").append(e);
+            }
+            this.popover.find(".popover-content").append(this.iconpicker);
+            return this.iconpicker;
+        },
+        _processIcons: function() {
             var t = this;
-            this.iconpicker = c(this.options.templates.iconpicker);
             var e = function(e) {
-                var a = c(this);
+                var a = o(this);
                 if (a.is("i")) {
                     a = a.parent();
                 }
@@ -549,30 +569,51 @@
                     t.hide();
                 }
             };
-            var a = c(this.options.templates.iconpickerItem);
-            var s = [];
-            for (var r in this.options.icons) {
-                if (typeof this.options.icons[r].title === "string") {
-                    var i = a.clone();
-                    i.find("i").addClass(this.options.fullClassFormatter(this.options.icons[r].title));
-                    i.data("iconpickerValue", this.options.icons[r].title).on("click.iconpicker", e);
-                    i.attr("title", "." + this.options.icons[r].title);
-                    if (this.options.icons[r].searchTerms.length > 0) {
-                        var f = "";
-                        for (var l = 0; l < this.options.icons[r].searchTerms.length; l++) {
-                            f = f + this.options.icons[r].searchTerms[l] + " ";
+            var a = o(this.options.templates.iconpickerItem);
+            for (var s in this.options.icons) {
+                if (typeof this.options.icons[s].title === "string") {
+                    var r = a.clone();
+                    r.find("i").addClass(this.options.fullClassFormatter(this.options.icons[s].title));
+                    r.data("iconpickerValue", this.options.icons[s].title).on("click.iconpicker", e);
+                    r.attr("title", "." + this.options.icons[s].title);
+                    if (this.options.icons[s].searchTerms.length > 0) {
+                        var i = "";
+                        for (var f = 0; f < this.options.icons[s].searchTerms.length; f++) {
+                            i = i + this.options.icons[s].searchTerms[f] + " ";
                         }
-                        i.attr("data-search-terms", f);
+                        r.attr("data-search-terms", i);
                     }
-                    s.push(i);
+                    this.processedIcons.push(r);
                 }
             }
-            this.iconpicker.find(".iconpicker-items").append(s);
-            this.popover.find(".popover-content").append(this.iconpicker);
-            return this.iconpicker;
+        },
+        _loadIcons: function(t) {
+            if (typeof t === "undefined") {
+                t = this.options.iconsPerPage;
+            }
+            var s = this;
+            var r = [];
+            this.processedIcons.forEach(function(e, a) {
+                if (e.attr("data-displayed") === "1" || r.length >= t) {
+                    return;
+                }
+                s.processedIcons[a].attr("data-displayed", "1");
+                r.push(e);
+            });
+            var e = this.processedIcons.filter(function(e) {
+                return e.attr("data-displayed") !== 1;
+            });
+            if (e.length - r.length < 1) {
+                this.iconpicker.find(".iconpicker-items").removeClass("iconpicker-items--can-load-more");
+            }
+            if (this.options.paginateIcons && this.iconpicker.find(".iconpicker-item").length > 0) {
+                this.iconpicker.find(".iconpicker-item").last().after(r);
+            } else {
+                this.iconpicker.find(".iconpicker-items").append(r);
+            }
         },
         _isEventInsideIconpicker: function(e) {
-            var a = c(e.target);
+            var a = o(e.target);
             if ((!a.hasClass("iconpicker-element") || a.hasClass("iconpicker-element") && !a.is(this.element)) && a.parents(".iconpicker-popover").length === 0) {
                 return false;
             }
@@ -581,7 +622,7 @@
         _bindElementEvents: function() {
             var a = this;
             this.getSearchInput().on("keyup.iconpicker", function() {
-                a.filter(c(this).val().toLowerCase());
+                a.filter(o(this).val().toLowerCase());
             });
             this.getAcceptButton().on("click.iconpicker", function() {
                 var e = a.iconpicker.find(".iconpicker-selected").get(0);
@@ -610,22 +651,22 @@
             }
             if (this.hasInput()) {
                 this.input.on("keyup.iconpicker", function(e) {
-                    if (!f.inArray(e.keyCode, [ 38, 40, 37, 39, 16, 17, 18, 9, 8, 91, 93, 20, 46, 186, 190, 46, 78, 188, 44, 86 ])) {
+                    if (!r.inArray(e.keyCode, [ 38, 40, 37, 39, 16, 17, 18, 9, 8, 91, 93, 20, 46, 186, 190, 46, 78, 188, 44, 86 ])) {
                         a.update();
                     } else {
                         a._updateFormGroupStatus(a.getValid(this.value) !== false);
                     }
                     if (a.options.inputSearch === true) {
-                        a.filter(c(this).val().toLowerCase());
+                        a.filter(o(this).val().toLowerCase());
                     }
                 });
             }
         },
         _bindWindowEvents: function() {
-            var e = c(window.document);
+            var e = o(window.document);
             var a = this;
             var t = ".iconpicker.inst" + this._id;
-            c(window).on("resize.iconpicker" + t + " orientationchange.iconpicker" + t, function(e) {
+            o(window).on("resize.iconpicker" + t + " orientationchange.iconpicker" + t, function(e) {
                 if (a.popover.hasClass("in")) {
                     a.updatePlacement();
                 }
@@ -652,8 +693,8 @@
             }
         },
         _unbindWindowEvents: function() {
-            c(window).off(".iconpicker.inst" + this._id);
-            c(window.document).off(".iconpicker.inst" + this._id);
+            o(window).off(".iconpicker.inst" + this._id);
+            o(window.document).off(".iconpicker.inst" + this._id);
         },
         updatePlacement: function(e, a) {
             e = e || this.options.placement;
@@ -669,7 +710,7 @@
             };
             this.popover.removeClass("inline topLeftCorner topLeft top topRight topRightCorner " + "rightTop right rightBottom bottomRight bottomRightCorner " + "bottom bottomLeft bottomLeftCorner leftBottom left leftTop");
             if (typeof e === "object") {
-                return this.popover.pos(c.extend({}, t, e));
+                return this.popover.pos(o.extend({}, t, e));
             }
             switch (e) {
               case "inline":
@@ -800,7 +841,7 @@
                 display: this.options.placement === "inline" ? "" : "block"
             });
             if (t !== false) {
-                this.popover.pos(t).css("maxWidth", c(window).width() - this.container.offset().left - 5);
+                this.popover.pos(t).css("maxWidth", o(window).width() - this.container.offset().left - 5);
             } else {
                 this.popover.css({
                     top: "auto",
@@ -839,11 +880,11 @@
             return false;
         },
         getValid: function(e) {
-            if (!f.isString(e)) {
+            if (!r.isString(e)) {
                 e = "";
             }
             var a = e === "";
-            e = c.trim(e);
+            e = o.trim(e);
             var t = false;
             for (var s = 0; s < this.options.icons.length; s++) {
                 if (this.options.icons[s].title === e) {
@@ -931,44 +972,53 @@
         getSearchInput: function() {
             return this.popover.find(".iconpicker-search");
         },
-        filter: function(r) {
-            if (f.isEmpty(r)) {
-                this.iconpicker.find(".iconpicker-item").show();
-                return c(false);
+        filter: function(f) {
+            var c = this;
+            if (r.isEmpty(f)) {
+                this.processedIcons.forEach(function(e) {
+                    e.show();
+                });
+                this.iconpicker.find(".iconpicker-items").removeClass("iconpicker-search-active");
+                return o(false);
             } else {
-                var i = [];
-                this.iconpicker.find(".iconpicker-item").each(function() {
-                    var e = c(this);
-                    var a = e.attr("title").toLowerCase();
-                    var t = e.attr("data-search-terms") ? e.attr("data-search-terms").toLowerCase() : "";
-                    a = a + " " + t;
-                    var s = false;
+                this.iconpicker.find(".iconpicker-items").addClass("iconpicker-search-active");
+                var l = [];
+                this.processedIcons.forEach(function(e, a) {
+                    var t = o(e);
+                    var s = t.attr("title").toLowerCase();
+                    var r = t.attr("data-search-terms") ? t.attr("data-search-terms").toLowerCase() : "";
+                    s = s + " " + r;
+                    var i = false;
                     try {
-                        s = new RegExp("(^|\\W)" + r, "g");
+                        i = new RegExp("(^|\\W)" + f, "g");
                     } catch (e) {
-                        s = false;
+                        i = false;
                     }
-                    if (s !== false && a.match(s)) {
-                        i.push(e);
-                        e.show();
+                    if (i !== false && s.match(i)) {
+                        l.push(t);
+                        if (c.options.paginateIcons && c.iconpicker.find('.iconpicker-item[title="' + t.title + '"]').length === 0) {
+                            c.processedIcons[a].attr("data-displayed", 1);
+                            c.iconpicker.find(".iconpicker-item").last().after(t);
+                        }
+                        t.show();
                     } else {
-                        e.hide();
+                        t.hide();
                     }
                 });
-                return i;
+                return l;
             }
         },
         show: function() {
             if (this.popover.hasClass("in")) {
                 return false;
             }
-            c.iconpicker.batch(c(".iconpicker-popover.in:not(.inline)").not(this.popover), "hide");
+            o.iconpicker.batch(o(".iconpicker-popover.in:not(.inline)").not(this.popover), "hide");
             this._trigger("iconpickerShow", {
                 iconpickerValue: this.iconpickerValue
             });
             this.updatePlacement();
             this.popover.addClass("in");
-            setTimeout(c.proxy(function() {
+            setTimeout(o.proxy(function() {
                 this.popover.css("display", this.isInline() ? "" : "block");
                 this._trigger("iconpickerShown", {
                     iconpickerValue: this.iconpickerValue
@@ -983,7 +1033,7 @@
                 iconpickerValue: this.iconpickerValue
             });
             this.popover.removeClass("in");
-            setTimeout(c.proxy(function() {
+            setTimeout(o.proxy(function() {
                 this.popover.css("display", "none");
                 this.getSearchInput().val("");
                 this.filter("");
@@ -1025,7 +1075,7 @@
             this.element.removeData("iconpicker").removeData("iconpickerValue").removeClass("iconpicker-element");
             this._unbindElementEvents();
             this._unbindWindowEvents();
-            c(this.popover).remove();
+            o(this.popover).remove();
             this._trigger("iconpickerDestroyed", {
                 iconpickerValue: this.iconpickerValue
             });
@@ -1054,16 +1104,16 @@
             return this.options.placement === "inline" || this.popover.hasClass("inline");
         }
     };
-    c.iconpicker = t;
-    c.fn.iconpicker = function(a) {
+    o.iconpicker = t;
+    o.fn.iconpicker = function(a) {
         return this.each(function() {
-            var e = c(this);
+            var e = o(this);
             if (!e.data("iconpicker")) {
                 e.data("iconpicker", new t(this, typeof a === "object" ? a : {}));
             }
         });
     };
-    t.defaultOptions = c.extend(t.defaultOptions, {
+    t.defaultOptions = o.extend(t.defaultOptions, {
         icons: [ {
             title: "fab fa-500px",
             searchTerms: []

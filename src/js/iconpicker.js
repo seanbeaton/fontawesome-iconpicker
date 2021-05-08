@@ -137,6 +137,8 @@
             },
             input: 'input,.iconpicker-input', // children input selector
             inputSearch: false, // use the input as a search box too?
+            paginateIcons: false, // should the iconpicker paginate the icons it loads. good for 1k+ icons
+            iconsPerPage: 100, // how many icons to load at once
             container: false, //  Appends the popover to a specific element. If not set, the selected element or element parent is used
             component: '.input-group-addon,.iconpicker-component', // children component jQuery selector or object, relative to the container element
             // Plugin templates:
@@ -149,6 +151,7 @@
                 search: '<input type="search" class="form-control iconpicker-search" placeholder="Type to filter" />',
                 iconpicker: '<div class="iconpicker"><div class="iconpicker-items"></div></div>',
                 iconpickerItem: '<a role="button" href="javascript:;" class="iconpicker-item"><i></i></a>',
+                loadMoreButton: '<button class="iconpicker-load-more">Load More</button>',
             }
         };
 
@@ -165,6 +168,8 @@
         Iconpicker.prototype = {
             constructor: Iconpicker,
             options: {},
+            offset: 0,
+            processedIcons: [],
             _id: 0, // instance identifier for bind/unbind events
             _trigger: function(name, opts) {
                 //triggers an event bound to the element
@@ -208,9 +213,28 @@
                 return this.popover;
             },
             _createIconpicker: function() {
-                var _self = this;
                 this.iconpicker = $(this.options.templates.iconpicker);
+                var _self = this;
+                this._processIcons();
+                this._loadIcons();
+                if (this.options.paginateIcons) {
+                    var $loadMoreButton = $(this.options.templates.loadMoreButton);
+                    $loadMoreButton.on('click', function(e) {
+                        e.preventDefault();
+                        _self._loadIcons()
+                    })
+                    this.iconpicker.find('.iconpicker-items')
+                        .addClass('iconpicker-items--can-load-more')
+                        .append($loadMoreButton);
 
+                }
+                this.popover.find('.popover-content').append(this.iconpicker);
+
+                return this.iconpicker;
+            },
+            _processIcons: function() {
+
+                var _self = this;
                 var itemClickFn = function(e) {
                     var $this = $(this);
                     if ($this.is('i')) {
@@ -239,7 +263,7 @@
                 };
 
                 var $itemElementTemplate = $(this.options.templates.iconpickerItem);
-                var $elementsToAppend = [];
+
                 for (var i in this.options.icons) {
                     if (typeof this.options.icons[i].title === 'string') {
                         var itemElement = $itemElementTemplate.clone();
@@ -256,13 +280,38 @@
                             }
                             itemElement.attr('data-search-terms', searchTerms);
                         }
-                        $elementsToAppend.push(itemElement);
+                        this.processedIcons.push(itemElement);
                     }
                 }
-                this.iconpicker.find('.iconpicker-items').append($elementsToAppend);
-                this.popover.find('.popover-content').append(this.iconpicker);
+            },
+            _loadIcons: function(loadCount) {
+                if (typeof loadCount === "undefined") {
+                    loadCount = this.options.iconsPerPage;
+                }
 
-                return this.iconpicker;
+                var _self = this;
+                var $elementsToAppend = [];
+                this.processedIcons.forEach(function(icon, index) {
+                    if (icon.attr('data-displayed') === '1' || $elementsToAppend.length >= loadCount) {
+                        return;
+                    }
+                    _self.processedIcons[index].attr('data-displayed', '1')
+                    $elementsToAppend.push(icon)
+                })
+
+                var $icons_not_yet_added = this.processedIcons.filter(function(icon) {
+                    return icon.attr('data-displayed') !== 1
+                });
+
+                if ($icons_not_yet_added.length - $elementsToAppend.length < 1) {
+                    this.iconpicker.find('.iconpicker-items').removeClass('iconpicker-items--can-load-more')
+                }
+
+                if (this.options.paginateIcons && this.iconpicker.find('.iconpicker-item').length > 0) {
+                    this.iconpicker.find('.iconpicker-item').last().after($elementsToAppend);
+                } else {
+                    this.iconpicker.find('.iconpicker-items').append($elementsToAppend);
+                }
             },
             _isEventInsideIconpicker: function(e) {
                 var _t = $(e.target);
@@ -697,13 +746,18 @@
                 return this.popover.find('.iconpicker-search');
             },
             filter: function(filterText) {
+                var _self = this;
                 if (_helpers.isEmpty(filterText)) {
-                    this.iconpicker.find('.iconpicker-item').show();
+                    this.processedIcons.forEach(function(icon) {
+                        icon.show()
+                    });
+                    this.iconpicker.find('.iconpicker-items').removeClass('iconpicker-search-active')
                     return $(false);
                 } else {
+                    this.iconpicker.find('.iconpicker-items').addClass('iconpicker-search-active')
                     var found = [];
-                    this.iconpicker.find('.iconpicker-item').each(function() {
-                        var $this = $(this);
+                    this.processedIcons.forEach(function(icon, index) {
+                        var $this = $(icon);
                         var text = $this.attr('title').toLowerCase();
                         var searchTerms = $this.attr('data-search-terms') ? $this.attr('data-search-terms').toLowerCase() : '';
                         text = text + ' ' + searchTerms;
@@ -715,9 +769,13 @@
                         }
                         if ((regex !== false) && text.match(regex)) {
                             found.push($this);
-                            $this.show();
+                            if (_self.options.paginateIcons && _self.iconpicker.find('.iconpicker-item[title="' + $this.title + '"]').length === 0) {
+                                _self.processedIcons[index].attr('data-displayed', 1);
+                                _self.iconpicker.find('.iconpicker-item').last().after($this);
+                            }
+                            $this.show()
                         } else {
-                            $this.hide();
+                            $this.hide()
                         }
                     });
                     return found;
