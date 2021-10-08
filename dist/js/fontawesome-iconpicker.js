@@ -594,7 +594,7 @@
             var s = this;
             var r = [];
             this.processedIcons.forEach(function(e, a) {
-                if (e.attr("data-displayed") === "1" || r.length >= t) {
+                if (s.options.paginateIcons && (e.attr("data-displayed") === "1" || r.length >= t)) {
                     return;
                 }
                 s.processedIcons[a].attr("data-displayed", "1");
