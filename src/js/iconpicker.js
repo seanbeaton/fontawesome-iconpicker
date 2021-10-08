@@ -292,7 +292,7 @@
                 var _self = this;
                 var $elementsToAppend = [];
                 this.processedIcons.forEach(function(icon, index) {
-                    if (icon.attr('data-displayed') === '1' || $elementsToAppend.length >= loadCount) {
+                    if (_self.options.paginateIcons && (icon.attr('data-displayed') === '1' || $elementsToAppend.length >= loadCount)) {
                         return;
                     }
                     _self.processedIcons[index].attr('data-displayed', '1')
